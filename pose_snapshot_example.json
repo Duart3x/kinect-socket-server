@@ -1,0 +1,54 @@
+{
+  "body_id": 1,
+  "timestamp": "pose_snapshot_20240115_143025.json",
+  "joints": [
+    {
+      "joint_id": 0,
+      "joint_name": "PELVIS",
+      "position": {
+        "x": 123.456,
+        "y": 789.012,
+        "z": 2345.678
+      },
+      "orientation": {
+        "w": 1.0,
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "confidence_level": 2
+    },
+    {
+      "joint_id": 1,
+      "joint_name": "SPINE_NAVEL",
+      "position": {
+        "x": 125.123,
+        "y": 650.456,
+        "z": 2340.789
+      },
+      "orientation": {
+        "w": 0.998,
+        "x": 0.01,
+        "y": 0.02,
+        "z": 0.015
+      },
+      "confidence_level": 2
+    },
+    {
+      "joint_id": 26,
+      "joint_name": "HEAD",
+      "position": {
+        "x": 130.789,
+        "y": 200.456,
+        "z": 2335.123
+      },
+      "orientation": {
+        "w": 0.995,
+        "x": 0.005,
+        "y": 0.015,
+        "z": 0.01
+      },
+      "confidence_level": 2
+    }
+  ]
+}
