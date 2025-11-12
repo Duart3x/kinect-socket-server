@@ -98,6 +98,11 @@
     <ClInclude Include="PoseSnapshotCapture.h" />
     <ClInclude Include="SkeletonSocketSender.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\sample_helper_libs\window_controller_3d\window_controller_3d.vcxproj">
+      <Project>{9E78B4CC-B641-42A1-8375-75A2CC8B3124}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(SolutionDir)\packages\Microsoft.Azure.Kinect.Sensor.1.4.1\build\native\Microsoft.Azure.Kinect.Sensor.targets" Condition="Exists('$(SolutionDir)\packages\Microsoft.Azure.Kinect.Sensor.1.4.1\build\native\Microsoft.Azure.Kinect.Sensor.targets')" />

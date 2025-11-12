@@ -4,6 +4,7 @@
 #pragma once
 
 #include <array>
+#include <string>
 #include <unordered_map>
 #include <k4abttypes.h>
 
