@@ -149,8 +149,7 @@ void PoseSnapshotCapture::SaveSkeletonSnapshot(const k4abt_body_t& body)
 		k4abt_joint_confidence_level_t confidence = body.skeleton.joints[joint].confidence_level;
 
 		json jointObj;
-		jointObj["joint_id"] = joint;
-		jointObj["joint_name"] = GetJointName(joint);
+		jointObj["joint"] = joint;
 
 		jointObj["position"] = {
 			   {"x", pos.xyz.x},
