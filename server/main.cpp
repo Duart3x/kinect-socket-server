@@ -16,6 +16,12 @@
 #include "PoseSnapshotCapture.h"
 #include "SkeletonSocketSender.h"
 
+// Information provided upon startup of the unity application which
+// automatically logs the select PORT and the attributed IP by the network
+// (server prioritizes the wireless hotspot IP)
+std::string IP = "10.182.54.68";
+const int PORT = 8888;
+
 void PrintUsage()
 {
 #ifdef _WIN32
@@ -337,7 +343,7 @@ void PlayFile(InputSettings inputSettings)
 	PoseSnapshotCapture snapshotCapture(std::chrono::milliseconds(3000));
 
 	// Create and initialize socket sender
-	SkeletonSocketSender socketSender("127.0.0.1", 8888);
+	SkeletonSocketSender socketSender(IP, PORT);
 	if (socketSender.Initialize())
 	{
 		printf("Socket sender initialized and connected!\n");
@@ -446,7 +452,7 @@ void PlayFromDevice(InputSettings inputSettings)
 	PoseSnapshotCapture snapshotCapture(std::chrono::milliseconds(3000));
 
 	// Create and initialize socket sender
-	SkeletonSocketSender socketSender("127.0.0.1", 8888);
+	SkeletonSocketSender socketSender(IP, PORT);
 	if (socketSender.Initialize())
 	{
 		printf("Socket sender initialized and connected!\n");
