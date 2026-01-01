@@ -28,6 +28,9 @@ public:
     // Reset the snapshot state to allow capturing again
     void Reset();
 
+    // Manually trigger a snapshot capture (mapped to 'r' key)
+    void TriggerManualCapture(const k4abt_body_t& body);
+
 private:
     void SaveSkeletonSnapshot(const k4abt_body_t& body);
     const char* GetJointName(int jointId) const;

@@ -19,7 +19,7 @@
 // Information provided upon startup of the unity application which
 // automatically logs the select PORT and the attributed IP by the network
 // (server prioritizes the wireless hotspot IP)
-std::string IP = "10.182.54.68";
+std::string IP = "10.77.22.68";
 const int PORT = 8888;
 
 void PrintUsage()
@@ -60,12 +60,10 @@ void PrintAppUsage()
 	printf(" h: help\n");
 	printf(" b: body visualization mode\n");
 	printf(" k: 3d window layout\n");
+	printf(" r: capture pose snapshot\n");
 	printf("\n");
 	printf(" Pose Snapshot Feature:\n\n");
-	printf(" Raise both hands above your head to START a 3-second countdown.\n");
-	printf(" You can LOWER your hands and change position during the countdown.\n");
-	printf(" The countdown will NOT stop - snapshot will be taken after 3 seconds.\n");
-	printf(" After capturing, the system resets automatically for the next snapshot.\n");
+	printf(" Press 'r' key to capture a snapshot of the current pose.\n");
 	printf(" The pose will be saved as a JSON file with timestamp in the current directory.\n");
 	printf("\n");
 }
@@ -74,6 +72,7 @@ void PrintAppUsage()
 bool s_isRunning = true;
 Visualization::Layout3d s_layoutMode = Visualization::Layout3d::OnlyMainView;
 bool s_visualizeJointFrame = false;
+bool s_triggerManualSnapshot = false;
 
 
 int64_t ProcessKey(void* /*context*/, int key)
@@ -93,6 +92,10 @@ int64_t ProcessKey(void* /*context*/, int key)
 		break;
 	case GLFW_KEY_H:
 		PrintAppUsage();
+		break;
+	case GLFW_KEY_R:
+		s_triggerManualSnapshot = true;
+		printf("R key pressed - snapshot will be captured!\n");
 		break;
 	}
 	return 1;
@@ -225,28 +228,11 @@ void VisualizeResult(k4abt_frame_t bodyFrame, Window3dWrapper& window3d, int dep
 			socketSender->SendSkeletonData(body, timestamp);
 		}
 
-		// Update snapshot capture
-		if (snapshotCapture)
+		// Manual snapshot capture with 'r' key
+		if (snapshotCapture && s_triggerManualSnapshot)
 		{
-			bool snapshotTaken = snapshotCapture->UpdateData(body, timestamp);
-
-			// Display countdown text
-			std::string countdownText = snapshotCapture->GetCountdownText();
-			if (!countdownText.empty())
-			{
-				printf("\r%s", countdownText.c_str());
-				fflush(stdout);
-			}
-			else if (!snapshotCapture->IsSnapshotTaken())
-			{
-				printf("\r              \r");
-				fflush(stdout);
-			}
-
-			if (snapshotTaken)
-			{
-				printf("\nReady for next snapshot - raise hands to start!\n");
-			}
+			snapshotCapture->TriggerManualCapture(body);
+			s_triggerManualSnapshot = false;
 		}
 	}
 
@@ -528,10 +514,7 @@ int main(int argc, char** argv)
 
 	PrintAppUsage();
 	printf("\n=== POSE SNAPSHOT ENABLED ===\n");
-	printf("Raise both hands above your head to START the 3-second countdown.\n");
-	printf("You can then LOWER your hands and change position.\n");
-	printf("The countdown continues - snapshot is taken after 3 seconds.\n");
-	printf("System resets automatically after each capture.\n");
+	printf("Press 'r' key to capture a snapshot of the current pose.\n");
 	printf("The snapshot will be saved as a JSON file in the current directory.\n");
 	printf("================================\n\n");
 

@@ -21,6 +21,9 @@ PoseSnapshotCapture::PoseSnapshotCapture(milliseconds captureDelay)
 
 bool PoseSnapshotCapture::UpdateData(k4abt_body_t selectedBody, uint64_t currentTimestampUsec)
 {
+	// COMMENTED OUT: Automatic hands-in-air detection
+	// Now using manual trigger with 'r' key instead
+	/*
 	k4a_float3_t leftWristJoint = selectedBody.skeleton.joints[K4ABT_JOINT_WRIST_LEFT].position;
 	k4a_float3_t rightWristJoint = selectedBody.skeleton.joints[K4ABT_JOINT_WRIST_RIGHT].position;
 	k4a_float3_t headJoint = selectedBody.skeleton.joints[K4ABT_JOINT_HEAD].position;
@@ -69,6 +72,7 @@ bool PoseSnapshotCapture::UpdateData(k4abt_body_t selectedBody, uint64_t current
 	m_bothHandsAreRaised = bothHandsAreRaised;
 
 	m_previousTimestamp = currentTimestamp;
+	*/
 	return false;
 }
 
@@ -223,4 +227,11 @@ const char* PoseSnapshotCapture::GetJointName(int jointId) const
 	case K4ABT_JOINT_EAR_RIGHT: return "EAR_RIGHT";
 	default: return "UNKNOWN";
 	}
+}
+
+void PoseSnapshotCapture::TriggerManualCapture(const k4abt_body_t& body)
+{
+	// Manually trigger snapshot capture (called when 'r' key is pressed)
+	SaveSkeletonSnapshot(body);
+	printf("\nManual snapshot captured!\n");
 }
